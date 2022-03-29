@@ -93,10 +93,14 @@ appp.post("/finduser", async (req, res) => {
     for(var i = 0; i < querySnapshot.docs.length; i++) {
             if(querySnapshot.docs[i].id == username){
               arrays.push({avt: querySnapshot.docs[i].data().avt, name: querySnapshot.docs[i].data().name});
+              
+            }else{
+                res.json({ msg : {message:"Tai khoan khong ton tai"} })
             }
+            res.send(arrays);
     }
     //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
-    res.send(arrays);
+    
   });
 
 appp.post("/update/profile", async (req, res) => {
