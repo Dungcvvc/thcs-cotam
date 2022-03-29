@@ -83,21 +83,22 @@ appp.post("/register", async (req, res, next) =>{
 appp.get("/datauser", async (req, res) => {
     const querySnapshot = await getDocs(collection(db, "user"));
     const list = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    res.send(list);
+    res.json(list);
   });
 
 appp.post("/finduser", async (req, res) => {
     const username = req.body.username;
-    const arrays = [];
+    var checkuserfailed = true;  
     const querySnapshot = await getDocs(collection(db, "user"));
     for(var i = 0; i < querySnapshot.docs.length; i++) {
             if(querySnapshot.docs[i].id == username){
-              arrays.push({avt: querySnapshot.docs[i].data().avt, name: querySnapshot.docs[i].data().name});
-              
-            }else{
-                res.json({ msg : {message:"Tai khoan khong ton tai"} })
-            }
-            res.send(arrays);
+              res.json({avt: querySnapshot.docs[i].data().avt, name: querySnapshot.docs[i].data().name});    
+              checkuserfailed = false;
+              return;
+            }       
+    }
+    if(checkuserfailed){
+        res.json({ msg : {message:"Tai khoan khong ton tai"} })
     }
     //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
     
