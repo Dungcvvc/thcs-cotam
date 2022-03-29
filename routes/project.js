@@ -30,10 +30,24 @@ app.post("/createproject", async (req, res) => {
 });
 
 
-app.get("/takeproject", async (req, res) => {
+app.post("/takeproject", async (req, res) => {
+
+    const username = req.body.username;
+    const arrays = [];
     const querySnapshot = await getDocs(collection(db, "project"));
-    const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
-    res.send(list);
+    for(var i = 0; i < querySnapshot.docs.length; i++) {
+            if(querySnapshot.docs[i].data().creator == username){
+              arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
+            }else{
+              querySnapshot.docs[i].data().members.forEach(data => {
+                if(data == username){
+                  arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
+                }
+              });
+            }
+    }
+    //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
+    res.send(arrays);
   });
 
 app.get("/dataproject", async (req, res) => {
@@ -43,13 +57,14 @@ app.get("/dataproject", async (req, res) => {
   });
 
 app.post("/update/project", async (req, res) => {
+  const idProject = req.body.idProject;
   const titleProject =  req.body.titleProject;
   const avtProject = req.body.avtProject;
   const description = req.body.description;
   const creator = req.body.creator;
   const members = req.body.members;
   const date = req.body.date;
-    const dlt =  updateDoc(doc(db, "project", username), {
+  const dlt =  updateDoc(doc(db, "project", idProject), {
       titleProject: titleProject,
       avtProject: avtProject,
       description: description,
@@ -58,15 +73,17 @@ app.post("/update/project", async (req, res) => {
       date: date,
     });
 
-    const docRef = doc(db, "user", username);
+    const docRef = doc(db, "project", idProject);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()){
         const dl = {
-            id: username,
-            password: docSnap.data().password,
-            name: docSnap.data().name,
-            avt: docSnap.data().avt,
-            email: docSnap.data().email,
+            id: idProject,
+            titleProject: docSnap.data().titleProject,
+            avtProject: docSnap.data().avtProject,
+            description: docSnap.data().description,
+            creator: docSnap.data().creator,
+            members: docSnap.data().members,
+            date: docSnap.data().date,
         }
         res.json({ msg : {message:"Sua thong tin thanh cong"}, user:  dl })
       }
