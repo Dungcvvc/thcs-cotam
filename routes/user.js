@@ -86,13 +86,13 @@ appp.get("/datauser", async (req, res) => {
     res.send(list);
   });
 
-appp.get("/alluser", async (req, res) => {
+appp.post("/finduser", async (req, res) => {
     const username = req.body.username;
     const arrays = [];
     const querySnapshot = await getDocs(collection(db, "user"));
     for(var i = 0; i < querySnapshot.docs.length; i++) {
             if(querySnapshot.docs[i].id == username){
-              arrays.push({id: querySnapshot.docs[i].id, name: querySnapshot.docs[i].data().name});
+              arrays.push({avt: querySnapshot.docs[i].data().avt, name: querySnapshot.docs[i].data().name});
             }
     }
     //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
