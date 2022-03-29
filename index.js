@@ -4,6 +4,7 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 const routeUser = require("./routes/user.js")
 const routeProject = require("./routes/project.js")
+const routeTask = require("./routes/task.js")
 
 
 const appp = express();
@@ -25,6 +26,7 @@ const port = process.env.PORT || 3000;
   
 routeUser(appp);
 routeProject(appp);
+routeTask(appp);
 // Initialize Firebase
 
 

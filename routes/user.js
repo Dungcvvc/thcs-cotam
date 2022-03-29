@@ -87,9 +87,16 @@ appp.get("/datauser", async (req, res) => {
   });
 
 appp.get("/alluser", async (req, res) => {
+    const username = req.body.username;
+    const arrays = [];
     const querySnapshot = await getDocs(collection(db, "user"));
-    const list = querySnapshot.docs.map((doc) => ({ id: doc.id, name: doc.data().name}));
-    res.send(list);
+    for(var i = 0; i < querySnapshot.docs.length; i++) {
+            if(querySnapshot.docs[i].id == username){
+              arrays.push({id: querySnapshot.docs[i].id, name: querySnapshot.docs[i].data().name});
+            }
+    }
+    //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
+    res.send(arrays);
   });
 
 appp.post("/update/profile", async (req, res) => {

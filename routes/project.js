@@ -30,7 +30,7 @@ app.post("/createproject", async (req, res) => {
 });
 
 
-app.post("/takeproject", async (req, res) => {
+app.post("/project/task", async (req, res) => {
 
     const username = req.body.username;
     const arrays = [];
@@ -56,7 +56,7 @@ app.get("/dataproject", async (req, res) => {
     res.send(list);
   });
 
-app.post("/update/project", async (req, res) => {
+app.post("/project/update", async (req, res) => {
   const idProject = req.body.idProject;
   const titleProject =  req.body.titleProject;
   const avtProject = req.body.avtProject;
