@@ -29,8 +29,6 @@ appp.post("/login", async (req, res) => {
         if(docSnap.data().password == data.password){
             //res.send({ msg : "Dang nhap thanh cong"});
             var token = jwt.sign({ id: data.username }, passwordtoken, {expiresIn: '2h'});
-            res.cookie("token", token);
-            
             res.json({msg : {message : "Dang nhap thanh cong"}, user:  dl, token: token});
             //console.log(docSnap.data(username));
         }else{
@@ -42,8 +40,8 @@ appp.post("/login", async (req, res) => {
       }
 });
 
-appp.get("/checktoken", async (req, res) => {
-   const token = req.cookies.token;
+appp.post("/checktoken", async (req, res) => {
+   const token = req.body.token;
 
    console.log(token);
    if(token) {
