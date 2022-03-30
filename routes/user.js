@@ -31,7 +31,7 @@ appp.post("/login", async (req, res) => {
             var token = jwt.sign({ id: data.username }, passwordtoken, {expiresIn: '2h'});
             res.cookie("token", token);
             
-            res.json({msg : {message : "Dang nhap thanh cong"}, user:  dl});
+            res.json({msg : {message : "Dang nhap thanh cong"}, user:  dl, token: token});
             //console.log(docSnap.data(username));
         }else{
             res.json({ msg : {message: "Mat khau khong chinh xac"} })
