@@ -1,14 +1,14 @@
-
+const path = require('path');
 const db = require("../config.js")
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push } = require("firebase/database");
 const { getFirestore, deleteDoc, query, where, Timestamp } = require("firebase/firestore");
 const { doc, setDoc, addDoc, collection, getDocs, updateDoc, getDoc, } = require("firebase/firestore");
 
+var jwt = require('jsonwebtoken');
+const passwordtoken = "dgc";
+
 function route(appp){
-
-
-
 
 appp.post("/login", async (req, res) => {
 
@@ -16,19 +16,6 @@ appp.post("/login", async (req, res) => {
     username:  req.body.username,
     password: req.body.password,
     }
-
-//     const q = query(collection(db, "user"));
-
-//     const querySnapshot = await getDocs(q);
-//     querySnapshot.forEach((doc) => {
-//   // doc.data() is never undefined for query doc snapshots
-//     if(doc.id == data.username){
-//         const id = doc.id;
-//     };
-//     });
-
-   
-    //console.log(req.body.password);
     const docRef = doc(db, "user", data.username);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()){
@@ -41,6 +28,9 @@ appp.post("/login", async (req, res) => {
         }
         if(docSnap.data().password == data.password){
             //res.send({ msg : "Dang nhap thanh cong"});
+            var token = jwt.sign({ id: data.username }, passwordtoken, {expiresIn: '2h'});
+            res.cookie("token", token);
+            
             res.json({msg : {message : "Dang nhap thanh cong"}, user:  dl});
             //console.log(docSnap.data(username));
         }else{
@@ -52,6 +42,34 @@ appp.post("/login", async (req, res) => {
       }
 });
 
+appp.get("/checktoken", async (req, res) => {
+   const token = req.cookies.token;
+
+   console.log(token);
+   if(token) {
+    try {
+        var id = jwt.verify(token, passwordtoken);
+        const docRef = doc(db, "user", id.id);
+        console.log(id.id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()){
+        const dl = {
+            id: id.id,
+            password: docSnap.data().password,
+            name: docSnap.data().name,
+            avt: docSnap.data().avt,
+            email: docSnap.data().email,
+        }
+        res.json({msg : {message : "Dang nhap thanh cong"}, user:  dl});
+
+    }
+      } catch(err) {
+        res.json({ msg : {message: "Loi doc token"} });
+      }
+   }else{
+    res.json({ msg : {message: "Tai khoan chua dang nhap"} });
+   } 
+});
 
 appp.post("/register", async (req, res, next) =>{
     var username = req.body.username;

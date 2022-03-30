@@ -30,7 +30,7 @@ app.post("/createproject", async (req, res) => {
 });
 
 
-app.post("/project/task", async (req, res) => {
+app.post("/project/take", async (req, res) => {
 
     const username = req.body.username;
     const arrays = [];

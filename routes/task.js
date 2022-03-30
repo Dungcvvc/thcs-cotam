@@ -31,6 +31,29 @@ app.post("/createtask", async (req, res) => {
         res.json({ msg : {message:"Tao nhiem vu thanh cong"} })
 });
 
+app.post("/project/task/take", async (req, res) => {
+
+    const idproject = req.body.idproject;
+    const arrays = [];
+ 
+    const querySnapshot = await getDocs(collection(db, "task"));
+    for(var i = 0; i < querySnapshot.docs.length; i++) {
+            if(querySnapshot.docs[i].data().idproject == idproject){
+              arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
+            }
+    }
+    res.json(arrays);
+});
+
+app.post("/task/delete", async (req, res) => {
+    const idtask = req.body.idtask;
+    const dlt =  deleteDoc(doc(db, "task", idtask), {
+        //id: id,
+    });
+    res.json({ msg : {message:"Xoa thanh cong"} })
+});
+
+
 app.post("/project/task/update/status", async (req, res) => {
 
     const idtask = req.body.idtask;
@@ -49,7 +72,7 @@ app.post("/task/delete", async (req, res) => {
     });
     res.json({ msg : {message:"Xoa thanh cong"} })
 });
-
 }
+
 
 module.exports = task;

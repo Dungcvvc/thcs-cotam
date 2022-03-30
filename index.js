@@ -5,14 +5,18 @@ var bodyParser = require("body-parser");
 const routeUser = require("./routes/user.js")
 const routeProject = require("./routes/project.js")
 const routeTask = require("./routes/task.js")
-
+var cookieParser = require('cookie-parser')
 
 const appp = express();
 appp.use(express.json());
+appp.use(cookieParser())
 
 appp.use(bodyParser.urlencoded());
 appp.use(cors());
 //appp.use(bodyParser.urlencoded({ extended: false }));
+
+
+
 
 
 // Import the functions you need from the SDKs you need
