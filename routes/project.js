@@ -56,6 +56,28 @@ app.get("/dataproject", async (req, res) => {
     res.send(list);
   });
 
+
+  app.post("/findproject", async (req, res) => {
+    const id = req.body.id;
+    var checkuserfailed = true;  
+    const querySnapshot = await getDocs(collection(db, "project"));
+    for(var i = 0; i < querySnapshot.docs.length; i++) {
+            if(querySnapshot.docs[i].id == id){
+              res.json({id: id, description: querySnapshot.docs[i].data().description,
+                date: querySnapshot.docs[i].data().date, avtProject: querySnapshot.docs[i].data().avtProject,
+                members: querySnapshot.docs[i].data().members, creator: querySnapshot.docs[i].data().creator,
+                titleProject: querySnapshot.docs[i].data().titleProject});    
+              checkuserfailed = false;
+              return;
+            }       
+    }
+    if(checkuserfailed){
+        res.json({ msg : {message:"Id khong ton tai"} })
+    }
+    //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
+    
+  });
+
 app.post("/project/update", async (req, res) => {
   const idProject = req.body.idProject;
   const titleProject =  req.body.titleProject;
