@@ -18,13 +18,14 @@ app.post("/createproject", async (req, res) => {
         const creator = req.body.creator;
         const members = req.body.members;
         const date = req.body.date;
+        const time = req.body.time;
         dky = addDoc(collection(db, "project"), {
             titleProject: titleProject,
             avtProject: avtProject,
             description: description,
             creator: creator,
             members: members,
-            date: date,
+            date: time,
         });
         res.json({ msg : {message:"Tao du an thanh cong"} })
 });
@@ -40,7 +41,7 @@ app.post("/project/take", async (req, res) => {
               arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
             }else{
               querySnapshot.docs[i].data().members.forEach(data => {
-                if(data == username){
+                if(data.username == username){
                   arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
                 }
               });
