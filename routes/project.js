@@ -25,7 +25,8 @@ app.post("/createproject", async (req, res) => {
             description: description,
             creator: creator,
             members: members,
-            date: time,
+            date: date,
+            time: time,
         });
         res.json({ msg : {message:"Tao du an thanh cong"} })
 });
