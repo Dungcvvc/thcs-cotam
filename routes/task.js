@@ -9,6 +9,7 @@ function task(app){
 app.post("/createtask", async (req, res) => {
 
     const idproject = req.body.idproject;
+    const titletask = req.body.titletask;
     const status = req.body.status;
     const date = req.body.date;
     const time = req.body.time;
@@ -19,6 +20,7 @@ app.post("/createtask", async (req, res) => {
     const dealinetime = req.body.dealinetime;
     dky = addDoc(collection(db, "task"), {
         idproject: idproject,
+        titletask:titletask,
         status: status,
         date: date,
         time: time,
