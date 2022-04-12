@@ -91,6 +91,20 @@ app.post("/project/task/update/status", async (req, res) => {
     res.json({ msg : {message:"Thay doi trang thai thanh cong"}})
 });
 
+app.post("/project/task/update/deadline", async (req, res) => {
+
+    const idtask = req.body.idtask;
+    const deadlinedate = req.body.deadlinedate;
+    const deadlinetime = req.body.deadlinetime;
+    
+    
+    const dlt =  updateDoc(doc(db, "task", idtask), {
+        deadlinedate: deadlinedate,
+        deadlinetime: deadlinetime,
+          });
+    res.json({ msg : {message:"Thay doi deadline thanh cong"}})
+});
+
 app.post("/task/delete", async (req, res) => {
     const idtask = req.body.idtask;
     const dlt =  deleteDoc(doc(db, "task", idtask), {
