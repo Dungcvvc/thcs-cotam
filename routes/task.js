@@ -47,6 +47,30 @@ app.post("/project/task/take", async (req, res) => {
     res.json(arrays);
 });
 
+app.post("/findtask", async (req, res) => {
+    const idtask = req.body.idtask;
+    var checkuserfailed = true;  
+    const querySnapshot = await getDocs(collection(db, "task"));
+    for(var i = 0; i < querySnapshot.docs.length; i++) {
+            if(querySnapshot.docs[i].id == idtask){
+              res.json({id: idtask, idproject: querySnapshot.docs[i].data().idproject,
+                titletask: querySnapshot.docs[i].data().titletask, status: querySnapshot.docs[i].data().status,
+                date: querySnapshot.docs[i].data().date, time: querySnapshot.docs[i].data().time,
+                description: querySnapshot.docs[i].data().description, image: querySnapshot.docs[i].data().image,
+                performer: querySnapshot.docs[i].data().performer, deadlinedate: querySnapshot.docs[i].data().deadlinedate,
+                dealinetime: querySnapshot.docs[i].data().dealinetime,
+                });    
+              checkuserfailed = false;
+              return;
+            }       
+    }
+    if(checkuserfailed){
+        res.json({ msg : {message:"Id khong ton tai"} })
+    }
+    //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
+    
+  });
+
 app.post("/task/delete", async (req, res) => {
     const idtask = req.body.idtask;
     const dlt =  deleteDoc(doc(db, "task", idtask), {
