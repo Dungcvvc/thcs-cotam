@@ -76,7 +76,7 @@ appp.post("/register", async (req, res, next) =>{
     var avt = req.body.avt;
     var email = req.body.email;
 
-    const docR = doc(db, "test", username);
+    const docR = doc(db, "user", username);
     const check = await getDoc(docR);
    
     if(check.data(username) != null){
