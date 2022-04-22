@@ -3,13 +3,13 @@ const { getDatabase, ref, push } = require("firebase/database");
 const { getFirestore, deleteDoc, query, where, Timestamp } = require("firebase/firestore");
 const { doc, setDoc, addDoc, collection, getDocs, updateDoc, getDoc, } = require("firebase/firestore");
 const firebaseConfig = {
-    apiKey: "AIzaSyAGiXjXjETffo8LkFxk6rbtdDVcYwJhP4A",
-    authDomain: "ptitworks-51075.firebaseapp.com",
-    projectId: "ptitworks-51075",
-    storageBucket: "ptitworks-51075.appspot.com",
-    messagingSenderId: "523435858478",
-    appId: "1:523435858478:web:9d7910b7424ca1279fddbf"
-};
+    apiKey: "AIzaSyBbRLp8pq17-uvcK244kFFXzBVTbtQ9uQw",
+    authDomain: "ptitworks-v2.firebaseapp.com",
+    projectId: "ptitworks-v2",
+    storageBucket: "ptitworks-v2.appspot.com",
+    messagingSenderId: "81649602707",
+    appId: "1:81649602707:web:11457b600221f9128efd66"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
