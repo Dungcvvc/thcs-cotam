@@ -58,6 +58,12 @@ app.get("/dataproject", async (req, res) => {
     res.json(list);
   });
 
+  app.get("/dataprojecttwo", async (req, res) => {
+    const querySnapshot = await getDocs(collection(db, "project"));
+    const list = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data()}));
+    res.json(list);
+  });
+
 
   app.post("/findproject", async (req, res) => {
     const id = req.body.id;
