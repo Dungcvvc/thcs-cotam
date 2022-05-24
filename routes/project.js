@@ -49,13 +49,13 @@ app.post("/project/take", async (req, res) => {
             }
     }
     //const list = querySnapshot.docs.map((doc) => ({ id: doc.id, members: doc.data().members, titleProject: doc.data().titleProject,creator: doc.data().creator }));
-    res.send(arrays);
+    res.json(arrays);
   });
 
 app.get("/dataproject", async (req, res) => {
     const querySnapshot = await getDocs(collection(db, "project"));
     const list = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data()}));
-    res.send(list);
+    res.json(list);
   });
 
 
