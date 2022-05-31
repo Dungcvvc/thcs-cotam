@@ -39,11 +39,17 @@ app.post("/project/take", async (req, res) => {
     const querySnapshot = await getDocs(collection(db, "project"));
     for(var i = 0; i < querySnapshot.docs.length; i++) {
             if(querySnapshot.docs[i].data().creator == username){
-              arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
+              arrays.push({id: querySnapshot.docs[i].id, description: querySnapshot.docs[i].data().description,
+                date: querySnapshot.docs[i].data().date, avtProject: querySnapshot.docs[i].data().avtProject,
+                members: querySnapshot.docs[i].data().members, creator: querySnapshot.docs[i].data().creator,
+                titleProject: querySnapshot.docs[i].data().titleProject});
             }else{
               querySnapshot.docs[i].data().members.forEach(data => {
                 if(data.username == username){
-                  arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
+                  arrays.push({id: querySnapshot.docs[i].id, description: querySnapshot.docs[i].data().description,
+                    date: querySnapshot.docs[i].data().date, avtProject: querySnapshot.docs[i].data().avtProject,
+                    members: querySnapshot.docs[i].data().members, creator: querySnapshot.docs[i].data().creator,
+                    titleProject: querySnapshot.docs[i].data().titleProject});
                 }
               });
             }
