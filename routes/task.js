@@ -41,7 +41,13 @@ app.post("/project/task/take", async (req, res) => {
     const querySnapshot = await getDocs(collection(db, "task"));
     for(var i = 0; i < querySnapshot.docs.length; i++) {
             if(querySnapshot.docs[i].data().idproject == idproject){
-              arrays.push({id: querySnapshot.docs[i].id, data: querySnapshot.docs[i].data()});
+              arrays.push({
+                id: querySnapshot.docs[i].id, idproject: querySnapshot.docs[i].data().idproject,
+                titletask: querySnapshot.docs[i].data().titletask, status: querySnapshot.docs[i].data().status,
+                date: querySnapshot.docs[i].data().date, time: querySnapshot.docs[i].data().time,
+                description: querySnapshot.docs[i].data().description, image: querySnapshot.docs[i].data().image,
+                performer: querySnapshot.docs[i].data().performer, deadlinedate: querySnapshot.docs[i].data().deadlinedate,
+                dealinetime: querySnapshot.docs[i].data().dealinetime,});
             }
     }
     res.json(arrays);
