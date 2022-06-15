@@ -108,7 +108,8 @@ appp.post("/finduser", async (req, res) => {
     const querySnapshot = await getDocs(collection(db, "user"));
     for(var i = 0; i < querySnapshot.docs.length; i++) {
             if(querySnapshot.docs[i].id == username){
-              res.json({avt: querySnapshot.docs[i].data().avt, name: querySnapshot.docs[i].data().name});    
+              res.json({avt: querySnapshot.docs[i].data().avt, name: querySnapshot.docs[i].data().name,
+                email: querySnapshot.docs[i].data().email});    
               checkuserfailed = false;
               return;
             }       
